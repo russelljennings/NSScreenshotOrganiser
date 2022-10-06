@@ -51,6 +51,7 @@
             this.lblStatus.Size = new System.Drawing.Size(121, 15);
             this.lblStatus.TabIndex = 0;
             this.lblStatus.Text = "0 known titles loaded.";
+            this.lblStatus.Click += new System.EventHandler(this.lblStatus_Click);
             this.lblStatus.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lblTitleDetectionCount_MouseMove);
             // 
             // btnOutputFolder

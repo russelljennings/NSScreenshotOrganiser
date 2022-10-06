@@ -89,7 +89,7 @@ namespace NSScreenshotOrganiser_WinFormGui
             }
         }
 
-        public static Dictionary<string,string> LoadGameIds(string gameIdFilePath)
+        public static Dictionary<string,string>? LoadGameIds(string gameIdFilePath)
         {
             try
             {

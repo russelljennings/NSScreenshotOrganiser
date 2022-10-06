@@ -56,5 +56,11 @@ namespace NSScreenshotOrganiser_WinFormGui
                 btnStartOrganising.Enabled = false;
             }
         }
+
+        private void lblStatus_Click(object sender, EventArgs e)
+        {
+            FormGameListView formGameListView = new FormGameListView();
+            formGameListView.ShowDialog();
+        }
     }
 }
