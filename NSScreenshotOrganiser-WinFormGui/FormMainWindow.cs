@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace NSScreenshotOrganiser_WinFormGui
 {
     public partial class FormMainWindow : Form
@@ -61,6 +63,26 @@ namespace NSScreenshotOrganiser_WinFormGui
         {
             FormGameListView formGameListView = new FormGameListView();
             formGameListView.ShowDialog();
+        }
+
+        private void btnSubmitNewGameTitle_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnOpenFile_Click(object sender, EventArgs e)
+        {
+            //Process.Start(lblFilePath.Text);
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
