@@ -72,6 +72,9 @@ namespace NSScreenshotOrganiser_WinFormGui
                     {
                         Debug.WriteLine("Attempting copy of '" + file + "' to '" + fileOutputDirectory + "'.");
                         File.Copy(file, fileOutputDirectory);
+                    }
+                    catch (IOException){
+                        Debug.WriteLine("File '" + file + "' already exists in destination.");
                     } catch (Exception ex)
                     {
                         MessageBox.Show("Was unable to copy '" + file + "' to '" + fileOutputDirectory + "': " + ex.Message);
@@ -86,10 +89,17 @@ namespace NSScreenshotOrganiser_WinFormGui
                     try
                     {
                         formNewGameFound.lblFilePath.Text = file;
-                        formNewGameFound.pictureBox1.ImageLocation = file;
+                        
                     } catch
                     {
                         
+                    }
+                    if (Path.GetExtension(file) == ".mp4"){
+                        formNewGameFound.lblVideoPlayerNotImplemented.Visible = true;
+                    } else
+                    {
+                        formNewGameFound.lblVideoPlayerNotImplemented.Visible = false;
+                        formNewGameFound.pictureBox1.ImageLocation = file;
                     }
                     formNewGameFound.textBox1.Enabled = true;
                     formNewGameFound.btnSkipNewGameTitle.Enabled = true;

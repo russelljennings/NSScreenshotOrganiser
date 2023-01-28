@@ -3,11 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32630.192
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSScreenshotOrganiser", "NSScreenshotOrganiser\NSScreenshotOrganiser.csproj", "{DBC02FBD-2FC7-45C3-B53A-7C63705083DC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSScreenshotOrganiser-Console", "NSScreenshotOrganiser-Console\NSScreenshotOrganiser-Console.csproj", "{75135621-FAF8-4832-A6B8-2293451D3358}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSScreenshotOrganiser-WinFormGui", "NSScreenshotOrganiser-WinFormGui\NSScreenshotOrganiser-WinFormGui.csproj", "{6D0D270A-2E4F-407F-9568-004191338E61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSScreenshotOrganiser-WinFormGui", "NSScreenshotOrganiser-WinFormGui\NSScreenshotOrganiser-WinFormGui.csproj", "{6D0D270A-2E4F-407F-9568-004191338E61}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,14 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DBC02FBD-2FC7-45C3-B53A-7C63705083DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DBC02FBD-2FC7-45C3-B53A-7C63705083DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DBC02FBD-2FC7-45C3-B53A-7C63705083DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DBC02FBD-2FC7-45C3-B53A-7C63705083DC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{75135621-FAF8-4832-A6B8-2293451D3358}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{75135621-FAF8-4832-A6B8-2293451D3358}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{75135621-FAF8-4832-A6B8-2293451D3358}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{75135621-FAF8-4832-A6B8-2293451D3358}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6D0D270A-2E4F-407F-9568-004191338E61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6D0D270A-2E4F-407F-9568-004191338E61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D0D270A-2E4F-407F-9568-004191338E61}.Release|Any CPU.ActiveCfg = Release|Any CPU

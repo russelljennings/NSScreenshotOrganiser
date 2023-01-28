@@ -36,6 +36,7 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.btnCopyID = new System.Windows.Forms.Button();
+            this.lblVideoPlayerNotImplemented = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -119,11 +120,22 @@
             this.btnCopyID.UseVisualStyleBackColor = true;
             this.btnCopyID.Click += new System.EventHandler(this.btnCopyID_Click);
             // 
+            // lblVideoPlayerNotImplemented
+            // 
+            this.lblVideoPlayerNotImplemented.Location = new System.Drawing.Point(12, 77);
+            this.lblVideoPlayerNotImplemented.Name = "lblVideoPlayerNotImplemented";
+            this.lblVideoPlayerNotImplemented.Size = new System.Drawing.Size(480, 272);
+            this.lblVideoPlayerNotImplemented.TabIndex = 35;
+            this.lblVideoPlayerNotImplemented.Text = "Video previews are not currently implemented.\r\n\r\nPlease click Open File to view.";
+            this.lblVideoPlayerNotImplemented.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.lblVideoPlayerNotImplemented.Visible = false;
+            // 
             // FormNewGameFound
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(504, 361);
+            this.Controls.Add(this.lblVideoPlayerNotImplemented);
             this.Controls.Add(this.btnCopyID);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.lblFilePath);
@@ -151,6 +163,7 @@
         public PictureBox pictureBox1;
         public TextBox textBox1;
         private Button btnCopyID;
+        public Label lblVideoPlayerNotImplemented;
 
         public string newGameTitle { get; set; }
     }
