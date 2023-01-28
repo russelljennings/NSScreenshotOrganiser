@@ -20,11 +20,11 @@ namespace NSScreenshotOrganiser_WinFormGui
                 var loadedGameIds = LoadGameIds("gameids.json");
             } catch
             {
-                //MessageBox.Show("Unable to load game ID file; one will be generated.");
-                SaveGameIds(GenerateGameIdList(), "gameids.json");
+
             }
-            
+
             Application.Run(new FormMainWindow());
+            
         }
 
         public static void OrganiseScreenshots(string inputFolderPath, string outputFolderPath, Dictionary<string,string> gameIds, FormMainWindow applicationWindow)
@@ -86,14 +86,6 @@ namespace NSScreenshotOrganiser_WinFormGui
                 {
                     FormNewGameFound formNewGameFound = new FormNewGameFound();
                     //  Open Form with Screenshot, or in the case of video, direct link to file so user can play it.
-                    try
-                    {
-                        formNewGameFound.lblFilePath.Text = file;
-                        
-                    } catch
-                    {
-                        
-                    }
                     if (Path.GetExtension(file) == ".mp4"){
                         formNewGameFound.lblVideoPlayerNotImplemented.Visible = true;
                     } else
@@ -110,10 +102,8 @@ namespace NSScreenshotOrganiser_WinFormGui
                     formNewGameFound.ShowDialog();
                     if(formNewGameFound.DialogResult.ToString() == "OK")
                     {
-                        //MessageBox.Show("Adding new ID '"+ foundGameId + "' as '" + formNewGameFound.newGameTitle + "'.");
                         gameIds.Add(foundGameId, formNewGameFound.newGameTitle);
                         SaveGameIds(gameIds, "gameids.json");
-                        //var string newgame = formNewGameFound.newGameTitle;
                     } else if (formNewGameFound.DialogResult.ToString() == "Continue" || formNewGameFound.DialogResult.ToString() == "Cancel")
                     {
 
@@ -123,18 +113,6 @@ namespace NSScreenshotOrganiser_WinFormGui
                     }
                 }
 
-
-
-                //  If user enters game name and clicks Submit
-                //    Add game to GameIds, and perform actions as known.
-
-                //  If user clicks Skip
-                //    Ignore that GameId this run.
-
-                //If GameID is known
-                //  Check if GameName folder exists, create if not
-
-                //  Move file to GameName folder
             }
 
             MessageBox.Show("Copy complete!");
@@ -150,14 +128,18 @@ namespace NSScreenshotOrganiser_WinFormGui
             try
             {
                 var gameIdFileContent = File.ReadAllText(gameIdFilePath);
-            } catch
+            }
+            catch (FileNotFoundException)
             {
-                // catch for exception: file doesn't exist
-                // - Generate one. Store a few popular gameIDs here.
+                Debug.WriteLine("Unable to find 'gameids.json', attempting to generate.");
+                SaveGameIds(GenerateGameIdList(), "gameids.json");
 
-                // catch for exception: unable to load
-                //MessageBox.Show("Failed to load gameids.json");
+            } catch (IOException ex) {
+                Debug.WriteLine("Unable to load 'gameids.json', because '"+ ex.Message +"'.");
 
+            } catch (Exception ex) {
+                MessageBox.Show("Failed to load gameids.json: '" + ex.Message + "'");
+                return null;
             }
             var gameIds = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(gameIdFilePath));
             return gameIds;
@@ -168,8 +150,10 @@ namespace NSScreenshotOrganiser_WinFormGui
         {
             Dictionary<string, string> gameIds = new Dictionary<string, string>();
             gameIds.Add("02CB906EA538A35643C1E1484C4B947D", "Animal Crossing - New Horizons");
+            gameIds.Add("16851BE00BC6068871FE49D98876D6C5", "Mario Kart 8 Deluxe");
             gameIds.Add("397A963DA4660090D65D330174AC6B04", "Splatoon 2");
             gameIds.Add("4CE9651EE88A979D41F24CE8D6EA1C23", "Splatoon 3");
+            
             return gameIds;
         }
 
@@ -179,9 +163,9 @@ namespace NSScreenshotOrganiser_WinFormGui
             {
                 string gameIdJson = JsonConvert.SerializeObject(gameIdDictionary);
                 File.WriteAllText(gameIdFilePath, gameIdJson);
-            } catch
+            } catch (Exception ex)
             {
-                MessageBox.Show("Unable to save gameids.json");
+                MessageBox.Show("Unable to save gameids.json: '" + ex.Message + "'");
             }
         }
 
