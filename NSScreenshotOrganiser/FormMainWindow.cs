@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Diagnostics;
 
 namespace NSScreenshotOrganiser_WinFormGui
@@ -51,12 +52,8 @@ namespace NSScreenshotOrganiser_WinFormGui
         private void FormMainWindow_MouseMove(object sender, EventArgs e)
         {
             // Check if Input and Output folders are set.
-            // If they're equal or if Output is inside Input, keep Start button disabled or else it'll loop forever.
-            if (lblInputFolder.Text == lblOutputFolder.Text)
-            {
-                btnStartOrganising.Enabled = false;
-            } // If either are in init state with no folder selected, keep Start button disabled until both are chosen.
-            else if (lblInputFolder.Text != "No Album Folder Selected" && lblOutputFolder.Text != "No Output Folder Selected")
+            // If either are in init state with no folder selected, keep Start button disabled until both are chosen.
+            if (lblInputFolder.Text != "No Album Folder Selected" && lblOutputFolder.Text != "No Output Folder Selected")
             {
                 btnStartOrganising.Enabled = true;
             } // Enable Start button.
