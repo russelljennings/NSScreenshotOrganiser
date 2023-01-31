@@ -50,10 +50,17 @@ namespace NSScreenshotOrganiser_WinFormGui
 
         private void FormMainWindow_MouseMove(object sender, EventArgs e)
         {
-            if(lblInputFolder.Text != "No Album Folder Selected" && lblOutputFolder.Text != "No Output Folder Selected")
+            // Check if Input and Output folders are set.
+            // If they're equal or if Output is inside Input, keep Start button disabled or else it'll loop forever.
+            if (lblInputFolder.Text == lblOutputFolder.Text)
+            {
+                btnStartOrganising.Enabled = false;
+            } // If either are in init state with no folder selected, keep Start button disabled until both are chosen.
+            else if (lblInputFolder.Text != "No Album Folder Selected" && lblOutputFolder.Text != "No Output Folder Selected")
             {
                 btnStartOrganising.Enabled = true;
-            } else
+            } // Enable Start button.
+            else 
             {
                 btnStartOrganising.Enabled = false;
             }
@@ -61,16 +68,11 @@ namespace NSScreenshotOrganiser_WinFormGui
 
         private void lblStatus_Click(object sender, EventArgs e)
         {
-            FormGameListView formGameListView = new FormGameListView();
+            FormGameListView formGameListView = new();
             formGameListView.ShowDialog();
         }
 
         private void btnSubmitNewGameTitle_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
         {
 
         }

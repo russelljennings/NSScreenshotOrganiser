@@ -34,7 +34,7 @@
             this.btnSubmitNewGameTitle = new System.Windows.Forms.Button();
             this.lblGuide = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtGameTitle = new System.Windows.Forms.TextBox();
             this.btnCopyID = new System.Windows.Forms.Button();
             this.lblVideoPlayerNotImplemented = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -51,7 +51,6 @@
             // 
             // btnOpenFile
             // 
-            this.btnOpenFile.Enabled = false;
             this.btnOpenFile.Location = new System.Drawing.Point(12, 48);
             this.btnOpenFile.Name = "btnOpenFile";
             this.btnOpenFile.Size = new System.Drawing.Size(75, 23);
@@ -63,7 +62,6 @@
             // btnSkipNewGameTitle
             // 
             this.btnSkipNewGameTitle.DialogResult = System.Windows.Forms.DialogResult.Continue;
-            this.btnSkipNewGameTitle.Enabled = false;
             this.btnSkipNewGameTitle.Location = new System.Drawing.Point(417, 48);
             this.btnSkipNewGameTitle.Name = "btnSkipNewGameTitle";
             this.btnSkipNewGameTitle.Size = new System.Drawing.Size(75, 23);
@@ -74,7 +72,6 @@
             // btnSubmitNewGameTitle
             // 
             this.btnSubmitNewGameTitle.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.btnSubmitNewGameTitle.Enabled = false;
             this.btnSubmitNewGameTitle.Location = new System.Drawing.Point(336, 48);
             this.btnSubmitNewGameTitle.Name = "btnSubmitNewGameTitle";
             this.btnSubmitNewGameTitle.Size = new System.Drawing.Size(75, 23);
@@ -86,7 +83,6 @@
             // lblGuide
             // 
             this.lblGuide.AutoSize = true;
-            this.lblGuide.Enabled = false;
             this.lblGuide.Location = new System.Drawing.Point(18, 19);
             this.lblGuide.Name = "lblGuide";
             this.lblGuide.Size = new System.Drawing.Size(106, 15);
@@ -103,12 +99,12 @@
             this.pictureBox1.TabIndex = 26;
             this.pictureBox1.TabStop = false;
             // 
-            // textBox1
+            // txtGameTitle
             // 
-            this.textBox1.Location = new System.Drawing.Point(130, 16);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(362, 23);
-            this.textBox1.TabIndex = 33;
+            this.txtGameTitle.Location = new System.Drawing.Point(130, 16);
+            this.txtGameTitle.Name = "txtGameTitle";
+            this.txtGameTitle.Size = new System.Drawing.Size(362, 23);
+            this.txtGameTitle.TabIndex = 33;
             // 
             // btnCopyID
             // 
@@ -137,7 +133,7 @@
             this.ClientSize = new System.Drawing.Size(504, 361);
             this.Controls.Add(this.lblVideoPlayerNotImplemented);
             this.Controls.Add(this.btnCopyID);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtGameTitle);
             this.Controls.Add(this.lblFilePath);
             this.Controls.Add(this.btnOpenFile);
             this.Controls.Add(this.btnSkipNewGameTitle);
@@ -161,10 +157,11 @@
         public Label lblGuide;
         public TextBox txtNewGameTitle;
         public PictureBox pictureBox1;
-        public TextBox textBox1;
+        public TextBox txtGameTitle;
         private Button btnCopyID;
         public Label lblVideoPlayerNotImplemented;
 
         public string newGameTitle { get; set; }
+        public string filePath { get; set; }
     }
 }

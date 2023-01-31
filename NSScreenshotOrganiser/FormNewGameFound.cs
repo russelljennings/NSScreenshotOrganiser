@@ -22,13 +22,13 @@ namespace NSScreenshotOrganiser_WinFormGui
 
         private void btnOpenFile_Click(object sender, EventArgs e)
         {
-            var processToStart = lblFilePath.Text;
+            var processToStart = filePath;
             Process.Start(new ProcessStartInfo(@processToStart) { UseShellExecute = true });
         }
 
         private void btnSubmitNewGameTitle_Click(object sender, EventArgs e)
         {
-            this.newGameTitle = textBox1.Text;
+            this.newGameTitle = txtGameTitle.Text;
             this.DialogResult = DialogResult.OK;
             this.Close();
         }

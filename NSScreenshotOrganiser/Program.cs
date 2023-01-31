@@ -30,10 +30,10 @@ namespace NSScreenshotOrganiser_WinFormGui
         public static void OrganiseScreenshots(string inputFolderPath, string outputFolderPath, Dictionary<string,string> gameIds, FormMainWindow applicationWindow)
         {
             // Regex strings
-            Regex rgImageFileExt = new Regex(@".jpg$");
-            Regex rgVideoFileExt = new Regex(@".mp4$");
-            Regex rgFoundGameId = new Regex(@"-(.+)\.\w{3}$");
-            Regex rgFileName = new Regex(@"\\(\d{16}.+$)");
+            Regex rgImageFileExt = new(@".jpg$");
+            Regex rgVideoFileExt = new(@".mp4$");
+            Regex rgFoundGameId = new(@"-(.+)\.\w{3}$");
+            Regex rgFileName = new(@"\\(\d{16}.+$)");
 
             // Create a list of all .jpg and .mp4 files in selected folder.
             List<string> inputFiles = Directory.GetFiles(inputFolderPath, "*.*", SearchOption.AllDirectories)
@@ -44,78 +44,113 @@ namespace NSScreenshotOrganiser_WinFormGui
             applicationWindow.progressBar1.Maximum = inputFiles.Count;
             applicationWindow.progressBar1.Value = 0;
 
-            // Iterate through each file found:
+            // For each file in Album folder
             foreach (string file in inputFiles)
             {
+                // Update progress bar value.
                 applicationWindow.progressBar1.Value++;
-                //Get GameID and FileType from file
+
+                // Get GameID and extension from file
+                Match fileName = rgFileName.Match(file);
                 Match fileGameId = rgFoundGameId.Match(file);
                 Match fileImageExtension = rgImageFileExt.Match(file);
                 Match fileVideoExtension = rgVideoFileExt.Match(file);
-                Match fileName = rgFileName.Match(file);
                 String foundGameId = fileGameId.ToString().Replace("-", "").Replace(".mp4", "").Replace(".jpg", "");
 
-                //Check GameID against list
-                // If known
+                // Check GameID against dictionary
+                // If game is known
                 if (gameIds.ContainsKey(foundGameId)) 
                 {
+                    
                     // Check for game folder, create if needed
                     var fileOutputDirectory = outputFolderPath + "\\" + gameIds[foundGameId] + "\\" + fileName;
 
-                    var fileOutputDirectoryCheck = new FileInfo(fileOutputDirectory);
-                    if (fileOutputDirectoryCheck.Exists == false)
+                    // Attempt to copy file.
+                    try
                     {
-                        fileOutputDirectoryCheck.Directory.Create();
-                    }
-
-                    try // Copy file to game folder
-                    {
-                        Debug.WriteLine("Attempting copy of '" + file + "' to '" + fileOutputDirectory + "'.");
-                        File.Copy(file, fileOutputDirectory);
-                    }
-                    catch (IOException){
-                        Debug.WriteLine("File '" + file + "' already exists in destination.");
+                        CopyMedia(file, fileOutputDirectory);
                     } catch (Exception ex)
                     {
                         MessageBox.Show("Was unable to copy '" + file + "' to '" + fileOutputDirectory + "': " + ex.Message);
+                        break;
                     }
-                    
 
                     
-                } else // If GameID is unknown
+                } else // GameID is unknown
                 {
-                    FormNewGameFound formNewGameFound = new FormNewGameFound();
-                    //  Open Form with Screenshot, or in the case of video, direct link to file so user can play it.
-                    if (Path.GetExtension(file) == ".mp4"){
-                        formNewGameFound.lblVideoPlayerNotImplemented.Visible = true;
-                    } else
+                    // Prepare NewGameFound Form
+                    FormNewGameFound formNewGameFound = new()
                     {
+                        // Define the file for the Form
+                        filePath = file
+                    };
+
+                    // If file is an image, display preview.
+                    if (Path.GetExtension(file) == ".jpg"){
                         formNewGameFound.lblVideoPlayerNotImplemented.Visible = false;
                         formNewGameFound.pictureBox1.ImageLocation = file;
+                    } // If file is a video, display prompt to open file. 
+                    else if (Path.GetExtension(file) == ".mp4"){
+                        formNewGameFound.lblVideoPlayerNotImplemented.Visible = true;
                     }
-                    formNewGameFound.textBox1.Enabled = true;
-                    formNewGameFound.btnSkipNewGameTitle.Enabled = true;
-                    formNewGameFound.btnSubmitNewGameTitle.Enabled = true;
-                    formNewGameFound.btnOpenFile.Enabled = true;
-                    formNewGameFound.NewGameId = foundGameId;
 
+                    // Show NewGameFound Form
                     formNewGameFound.ShowDialog();
+
+                    // If game title is supplied, add to gameids.json for future use.
+                    // Then attempt to copy the file.
                     if(formNewGameFound.DialogResult.ToString() == "OK")
-                    {
+                    { 
                         gameIds.Add(foundGameId, formNewGameFound.newGameTitle);
                         SaveGameIds(gameIds, "gameids.json");
-                    } else if (formNewGameFound.DialogResult.ToString() == "Continue" || formNewGameFound.DialogResult.ToString() == "Cancel")
+
+                        // Check for game folder, create if needed
+                        var fileOutputDirectory = outputFolderPath + "\\" + gameIds[foundGameId] + "\\" + fileName;
+                        // Attempt to copy file.
+                        try
+                        {
+                            CopyMedia(file, fileOutputDirectory);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Was unable to copy '" + file + "' to '" + fileOutputDirectory + "': " + ex.Message);
+                            break;
+                        }
+
+                    } // If user clicks 'Skip', move on to next one.
+                    else if (formNewGameFound.DialogResult.ToString() == "Continue")
                     {
 
-                    } else
+                    } // If user closes the dialogue box, cancel the process.
+                    else if (formNewGameFound.DialogResult.ToString() == "Cancel")
                     {
-                        // what.
+                        MessageBox.Show("Stopping copy process.");
+                        break;
                     }
                 }
+            }
+        }
 
+        // Attempts to copy a given file. 
+        // Will handle if the file already exists in destination, but will return any other exceptions.
+        public static void CopyMedia(string filePath, string outputFolderPath)
+        {
+            var fileOutputDirectoryCheck = new FileInfo(outputFolderPath);
+            if (fileOutputDirectoryCheck.Exists == false)
+            {
+                fileOutputDirectoryCheck.Directory.Create();
             }
 
-            MessageBox.Show("Copy complete!");
+            // Attempt to copy file to game folder
+            try
+            {
+                Debug.WriteLine("Attempting copy of '" + filePath + "' to '" + outputFolderPath + "'.");
+                File.Copy(filePath, outputFolderPath);
+            } // If file already exists in Output, move on to next one.
+            catch (IOException)
+            {
+                Debug.WriteLine("File '" + filePath + "' already exists in destination.");
+            }
         }
 
         public static bool GameIdExists(string gameId, Dictionary<string, string> gameIdDb)
@@ -141,19 +176,23 @@ namespace NSScreenshotOrganiser_WinFormGui
                 MessageBox.Show("Failed to load gameids.json: '" + ex.Message + "'");
                 return null;
             }
+
             var gameIds = JsonConvert.DeserializeObject<Dictionary<string, string>>(File.ReadAllText(gameIdFilePath));
+
             return gameIds;
         }
 
         // Returns a small GameId list with popular games.
         public static Dictionary<string, string>? GenerateGameIdList()
         {
-            Dictionary<string, string> gameIds = new Dictionary<string, string>();
-            gameIds.Add("02CB906EA538A35643C1E1484C4B947D", "Animal Crossing - New Horizons");
-            gameIds.Add("16851BE00BC6068871FE49D98876D6C5", "Mario Kart 8 Deluxe");
-            gameIds.Add("397A963DA4660090D65D330174AC6B04", "Splatoon 2");
-            gameIds.Add("4CE9651EE88A979D41F24CE8D6EA1C23", "Splatoon 3");
-            
+            Dictionary<string, string> gameIds = new()
+            {
+                { "02CB906EA538A35643C1E1484C4B947D", "Animal Crossing - New Horizons" },
+                { "16851BE00BC6068871FE49D98876D6C5", "Mario Kart 8 Deluxe" },
+                { "397A963DA4660090D65D330174AC6B04", "Splatoon 2" },
+                { "4CE9651EE88A979D41F24CE8D6EA1C23", "Splatoon 3" }
+            };
+
             return gameIds;
         }
 
