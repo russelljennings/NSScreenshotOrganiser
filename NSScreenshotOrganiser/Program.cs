@@ -18,9 +18,9 @@ namespace NSScreenshotOrganiser_WinFormGui
             try
             {
                 var loadedGameIds = LoadGameIds("gameids.json");
-            } catch
+            } catch (Exception ex)
             {
-
+                MessageBox.Show("Was unable to load gameids.json: " + ex.Message);
             }
 
             Application.Run(new FormMainWindow());
@@ -41,14 +41,21 @@ namespace NSScreenshotOrganiser_WinFormGui
                 .Contains(Path.GetExtension(file)))
                 .ToList();
 
+            // Reset progress bar.
             applicationWindow.progressBar1.Maximum = inputFiles.Count;
             applicationWindow.progressBar1.Value = 0;
+
+            // Disable button until complete.
+            applicationWindow.btnStartOrganising.Enabled = false;
 
             // For each file in Album folder
             foreach (string file in inputFiles)
             {
                 // Update progress bar value.
                 applicationWindow.progressBar1.Value++;
+
+                // Update text progress value.
+                applicationWindow.lblStatus.Text = "Processing file '" + applicationWindow.progressBar1.Value + "' of '" + inputFiles.Count + "'.";
 
                 // Get GameID and extension from file
                 Match fileName = rgFileName.Match(file);
@@ -82,9 +89,10 @@ namespace NSScreenshotOrganiser_WinFormGui
                     FormNewGameFound formNewGameFound = new()
                     {
                         // Define the file for the Form
-                        filePath = file
+                        filePath = file,
+                        NewGameId = foundGameId
                     };
-
+                    
                     // If file is an image, display preview.
                     if (Path.GetExtension(file) == ".jpg"){
                         formNewGameFound.lblVideoPlayerNotImplemented.Visible = false;
@@ -125,10 +133,16 @@ namespace NSScreenshotOrganiser_WinFormGui
                     else if (formNewGameFound.DialogResult.ToString() == "Cancel")
                     {
                         MessageBox.Show("Stopping copy process.");
+                        applicationWindow.lblStatus.Text = "Process cancelled.";
                         break;
                     }
                 }
             }
+
+            // Enable button as process is ended.
+            applicationWindow.btnStartOrganising.Enabled = true;
+            // Reset progress bar.
+            applicationWindow.progressBar1.Value = 0;
         }
 
         // Attempts to copy a given file. 
