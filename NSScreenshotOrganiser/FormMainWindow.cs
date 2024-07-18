@@ -10,7 +10,7 @@ namespace NSScreenshotOrganiser_WinFormGui
         {
             InitializeComponent();
             var loadedGameIds = Program.LoadGameIds("gameids.json");
-            var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            var version = "PlaceholderVersion";
             lblStatus.Text = $"{loadedGameIds.Count.ToString()} known titles loaded. Version {version}";
         }
 

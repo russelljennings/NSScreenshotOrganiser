@@ -22,9 +22,8 @@ jobs:
       run: |
         $commitId = "${{ github.sha }}"
         $shortCommitId = $commitId.Substring(0, 7)
-        $csprojFile = "NSScreenshotOrganiser\NSScreenshotOrganiser.csproj"
-        (Get-Content $csprojFile) -replace '<AssemblyVersion>.*</AssemblyVersion>', '<AssemblyVersion>' + $commitId + '</AssemblyVersion>' | Set-Content $csprojFile
-        (Get-Content $csprojFile) -replace '<FileVersion>.*</FileVersion>', '<FileVersion>' + $commitId + '</FileVersion>' | Set-Content $csprojFile
+        $versionChangeFile = ".\NSScreenshotOrganiser\FormMainWindow.cs"
+        (Get-Content $versionChangeFile) -replace 'PlaceholderVersion', "$shortCommitId" | Set-Content $versionChangeFile
 
     - name: Restore dependencies 
       run: dotnet restore
