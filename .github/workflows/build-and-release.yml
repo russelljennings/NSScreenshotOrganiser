@@ -6,7 +6,7 @@ on:
       - master  # Change this to your default branch
 
 jobs:
-  build:
+  Build:
     runs-on: windows-latest
 
     steps:
@@ -38,8 +38,8 @@ jobs:
         name: app-zip
         path: app.zip
 
-  release:
-    needs: build
+  Release:
+    needs: Build
     runs-on: ubuntu-latest
 
     steps:
