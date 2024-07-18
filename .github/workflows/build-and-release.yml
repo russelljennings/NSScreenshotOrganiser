@@ -23,7 +23,7 @@ jobs:
         $commitId = "${{ github.sha }}"
         $shortCommitId = $commitId.Substring(0, 7)
         $versionChangeFile = ".\NSScreenshotOrganiser\FormMainWindow.cs"
-        (Get-Content $versionChangeFile) -replace 'PlaceholderVersion', "$shortCommitId" | Set-Content $versionChangeFile
+        (Get-Content $versionChangeFile) -replace 'SWAPME', "$shortCommitId" | Set-Content $versionChangeFile
 
     - name: Restore dependencies 
       run: dotnet restore
