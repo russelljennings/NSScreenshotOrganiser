@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Reflection;
 
 namespace NSScreenshotOrganiser_WinFormGui
 {
@@ -9,7 +10,8 @@ namespace NSScreenshotOrganiser_WinFormGui
         {
             InitializeComponent();
             var loadedGameIds = Program.LoadGameIds("gameids.json");
-            lblStatus.Text = $"{loadedGameIds.Count.ToString()} known titles loaded.";
+            var version = Assembly.GetExecutingAssembly().GetName().Version.ToString();
+            lblStatus.Text = $"{loadedGameIds.Count.ToString()} known titles loaded. Version {version}";
         }
 
         private void btnShowConfigForm_Click(object sender, EventArgs e)

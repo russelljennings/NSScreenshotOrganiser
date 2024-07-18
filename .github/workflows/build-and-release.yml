@@ -3,7 +3,7 @@ name: Build and Release
 on:
   push:
     branches:
-      - master  # Change this to your default branch
+      - master
 
 jobs:
   Build:
@@ -16,9 +16,17 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v2
       with:
-        dotnet-version: '6.x' # Use the version of .NET SDK you need
+        dotnet-version: '8.x'
 
-    - name: Restore dependencies
+    - name: Inject Git Commit ID
+      run: |
+        $commitId = "${{ github.sha }}"
+        $shortCommitId = $commitId.Substring(0, 7)
+        $csprojFile = "NSScreenshotOrganiser\NSScreenshotOrganiser.csproj"
+        (Get-Content $csprojFile) -replace '<AssemblyVersion>.*</AssemblyVersion>', '<AssemblyVersion>' + $commitId + '</AssemblyVersion>' | Set-Content $csprojFile
+        (Get-Content $csprojFile) -replace '<FileVersion>.*</FileVersion>', '<FileVersion>' + $commitId + '</FileVersion>' | Set-Content $csprojFile
+
+    - name: Restore dependencies 
       run: dotnet restore
 
     - name: Build project

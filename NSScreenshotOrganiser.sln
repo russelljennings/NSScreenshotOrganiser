@@ -9,10 +9,11 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Description = A tool to more easily organise screenshots and videos taken on a Nintendo Switch.
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6D0D270A-2E4F-407F-9568-004191338E61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6D0D270A-2E4F-407F-9568-004191338E61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6D0D270A-2E4F-407F-9568-004191338E61}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{6D0D270A-2E4F-407F-9568-004191338E61}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{6D0D270A-2E4F-407F-9568-004191338E61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D0D270A-2E4F-407F-9568-004191338E61}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
