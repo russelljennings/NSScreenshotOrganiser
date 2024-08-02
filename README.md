@@ -5,6 +5,7 @@ A Windows desktop application to sort Nintendo Switch Album folder into subfolde
 ## TODO
 * Make the program asynchronous. UI currently freezes while copying files, giving the impression the app is frozen. 
 * Set up proper branches for Dev and Release. Clean up releases, tags.. etc.
+* Perhaps refactor so it can run on other platforms.
 
 ## Requirements
 *  [.NET 8 Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
