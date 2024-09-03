@@ -40,7 +40,7 @@ jobs:
         Compress-Archive -Path * -DestinationPath ../NSScreenshotOrganiser.zip
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: NSScreenshotOrganiser-zip
         path: NSScreenshotOrganiser.zip
